@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () =>{
-
+    
+    let play = false;
     const grid = document.querySelector('.grid');
     let squares = Array.from(document.querySelectorAll('.grid div'));
     const scoreDisplay = document.querySelector('#score');
@@ -85,13 +86,13 @@ function undraw() {
 
 //assign fucntions to keyCodes
 function control(e) {
-    if(e.keyCode === 37) {
+    if(e.keyCode === 37 && start) {
         moveLeft();
-    } else if (e.keyCode === 38) {
+    } else if (e.keyCode === 38 && start) {
         rotate()
-    }else if (e.keyCode === 39) {
+    }else if (e.keyCode === 39 && start) {
         moveRight()
-    } else if (e.keyCode === 40) {
+    } else if (e.keyCode === 40 && start) {
         moveDown();
     }
 }
@@ -197,6 +198,7 @@ startBtn.addEventListener('click', () => {
         clearInterval(timerId);
         timerId = null
     } else {
+        start = true;
         draw();
         timerId = setInterval(moveDown, 1000);
         nextRandom = Math.floor(Math.random()*theTetrominoes.length);
@@ -228,6 +230,20 @@ function gameOver(){
     if(current.some(index => squares[currentPosition + index].classList.contains('taken'))) {
         scoreDisplay.innerHTML = 'end';
         clearInterval(timerId);
+        start = false;
+        
+        // FLASH MOB
+        
+        // setInterval(function() {
+        //     document.querySelector(".grid").style.backgroundColor = "red";
+        // }, 1000);
+        
+        // setTimeout(function() {
+        //     setInterval(function() {
+        //         document.querySelector(".grid").style.backgroundColor = "black";
+        //     }, 1000)
+        // }, 500)
+        
     }
 }
 
